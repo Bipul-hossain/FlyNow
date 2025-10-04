@@ -1,8 +1,8 @@
 import React from "react";
+import { Link } from "react-router";
 
 const FlightDetails = ({ detail }) => {
-  console.log("Getting Detail", detail);
-  const { flightName, flightDate, flightTime } = detail;
+  const { flightName, flightDate, flightTime, _id } = detail;
   return (
     <div className="mx-16 my-6 bg-white shadow-sm rounded-xl p-6 flex justify-between items-center border border-gray-200 hover:shadow-lg transition-all duration-300">
       {/* Flight Info */}
@@ -19,9 +19,11 @@ const FlightDetails = ({ detail }) => {
       </div>
 
       {/* Button */}
-      <button className="px-5 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition">
-        Flight Details
-      </button>
+      <Link to={`flightseat/${_id}`}>
+        <button className="px-5 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition">
+          Flight Details
+        </button>
+      </Link>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { use, useEffect, useState } from "react";
 import "./App.css";
 import FlightDetails from "./Components/FlightDetails/FlightDetails";
+import { getSearchToLs, setSearchToLS } from "./utilities/localStorage";
 
 const dataJSON = fetch("http://localhost:3000/api/destination").then((res) =>
   res.json()
@@ -8,18 +9,15 @@ const dataJSON = fetch("http://localhost:3000/api/destination").then((res) =>
 
 function App() {
   const aroplaneData = use(dataJSON);
-  console.log("data log", aroplaneData.length);
+
   // flightRoadGo
   const [search, setSearch] = useState({});
   const [toDestinations, setToDestinations] = useState([]);
-  const [date, setDate] = useState("");
+
   const [searchResult, setSearchResult] = useState([]);
   const [notFund, setNotFound] = useState(false);
-  const handleDate = (e) => {
-    console.log(e.target.value);
-  };
+
   const handleSelector = (e) => {
-    console.log("Select", e.target.value);
     const toDestinationSelector = aroplaneData[0].allDestination.filter(
       (destination) => destination !== e.target.value
     );
@@ -33,10 +31,7 @@ function App() {
       flightDate: e.target.date.value,
     };
     setSearch(searchObject);
-
-    console.log(e.target.from.value);
-    console.log(e.target.to.value);
-    console.log(searchObject);
+    setSearchToLS(searchObject);
   };
   // console.log(Object.keys(search).length);
   useEffect(() => {
@@ -49,7 +44,9 @@ function App() {
 
   useEffect(() => {
     fetch(
-      `http://localhost:3000/api/aroplane/select?flightDate=${search.flightDate}&from=${search.from}&to=${search.to}`
+      `http://localhost:3000/api/aroplane/select?flightDate=${
+        getSearchToLs().flightDate
+      }&from=${getSearchToLs().from}&to=${getSearchToLs().to}`
     )
       .then((res) => res.json())
       .then((date) => setSearchResult(date));

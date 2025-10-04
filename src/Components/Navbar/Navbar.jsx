@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const Navbar = () => {
   return (
@@ -7,6 +8,11 @@ const Navbar = () => {
         <div className="flex-1">
           <a className="btn btn-ghost text-xl">daisyUI</a>
         </div>
+        <div className="flex gap-9">
+          <Link to="/">Go Home</Link>
+          <Link to="/admin/all/flight/list">All Flight List Admin</Link>
+        </div>
+
         <div className="flex-none">
           <div className="dropdown dropdown-end">
             <div
