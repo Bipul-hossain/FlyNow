@@ -8,6 +8,7 @@ import MainOutlate from "./Components/MainOutlate/MainOutlate.jsx";
 import FlightSeat from "./Components/FlightSeat/FlightSeat.jsx";
 import { getSearchToLs } from "./utilities/localStorage.js";
 import FlightListAdmin from "./Components/AdminSide/FlightList/FlightListAdmin.jsx";
+import AddFlightAdmin from "./Components/AdminSide/AddFlight/AddFlightAdmin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
         path: "/admin/all/flight/list",
         loader: () => fetch("http://localhost:3000/api/aroplane"),
         Component: FlightListAdmin,
+      },
+      {
+        path: "/admin/all/flight/post",
+        Component: AddFlightAdmin,
       },
     ],
   },
