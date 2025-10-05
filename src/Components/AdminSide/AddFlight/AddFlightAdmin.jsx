@@ -1,15 +1,53 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const AddFlightAdmin = () => {
   const [roads, setRoads] = useState([]);
   const [destination, setDestination] = useState([]);
   const [price, setPrice] = useState([]);
+  const [seats, setSeats] = useState([]);
+
+  let newSeatsArray = [];
+  const handleSeats = (e) => {
+    const totalSeat = parseInt(e.target.value);
+    for (let i = 0; i < totalSeat; i++) {
+      const seatObject = {
+        seatNumber: i + 1,
+        allRoads: roads,
+      };
+
+      console.log(seatObject);
+
+      newSeatsArray.push(seatObject);
+    }
+    setSeats(newSeatsArray);
+  };
 
   const handleAddRoad = (e) => {
     e.preventDefault();
     const roadsAdded = [...roads, e.target.road.value];
     setRoads(roadsAdded);
     e.target.reset();
+  };
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    const flight = {
+      flightName: e.target.flightName.value,
+      flightRoadGo: roads,
+      flightDate: e.target.flightDate.value,
+      flightTime: e.target.flightTime.value,
+      priceList: price,
+      flightSeat: seats,
+    };
+    axios
+      .post("http://localhost:3000/api/aroplane", flight)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -22,7 +60,7 @@ const AddFlightAdmin = () => {
           const newPrice = {
             from: roads[i],
             to: roads[j + 1],
-            price: 5000,
+            price: 0,
           };
           priceArray.push(newPrice);
         }
@@ -63,7 +101,7 @@ const AddFlightAdmin = () => {
             ))}
           </ol>
         </h1>
-        <form>
+        <form onSubmit={handleSubmitForm}>
           {/* Flight Name */}
           <div className="flex flex-col">
             <label className="text-sm font-medium text-gray-700 mb-1">
@@ -72,16 +110,10 @@ const AddFlightAdmin = () => {
             <input
               type="text"
               placeholder="Enter flight name"
+              name="flightName"
               required
               className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
-          </div>
-
-          {/* Flight Road */}
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
-              Flight Road
-            </label>
           </div>
 
           {/* Flight Date */}
@@ -91,6 +123,7 @@ const AddFlightAdmin = () => {
             </label>
             <input
               type="date"
+              name="flightDate"
               required
               className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
@@ -103,7 +136,20 @@ const AddFlightAdmin = () => {
             </label>
             <input
               type="text"
+              name="flightTime"
               placeholder="Enter flight time"
+              required
+              className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-gray-700 mb-1">
+              Total Seats
+            </label>
+            <input
+              onChange={handleSeats}
+              type="number"
+              placeholder="Enter total Flight Seat"
               required
               className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
@@ -120,6 +166,7 @@ const AddFlightAdmin = () => {
                   {tk.from} ➝ {tk.to}
                 </label>
                 <input
+                  onChange={(e) => (tk.price = e.target.value)}
                   type="number"
                   placeholder="Enter price"
                   className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

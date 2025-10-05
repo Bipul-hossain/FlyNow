@@ -6,9 +6,9 @@ const Sits = ({ sit }) => {
 
   const { seatNumber, price, isBooked } = sit;
 
-  const destinationSit = price.find(
-    (perSit) => perSit.from === search.from && perSit.to === search.to
-  );
+  // const destinationSit = price.find(
+  //   (perSit) => perSit.from === search.from && perSit.to === search.to
+  // );
 
   return (
     <div>
@@ -17,7 +17,7 @@ const Sits = ({ sit }) => {
           isBooked && "bg-red-500"
         }`}>
         <h1>Seat No: {seatNumber}</h1>
-        <p>Destination From : {price[0].from}</p>
+        {/* <p>Destination From : {price[0].from}</p> */}
         {/* <p>Destination From : {destinationSit.from}</p> */}
         {isBooked && <h2>Already Booked</h2>}
       </div>
