@@ -4,29 +4,44 @@ import { getSearchToLs } from "../../utilities/localStorage";
 
 const FlightDetails = ({ detail }) => {
   const { flightName, flightDate, flightTime, _id, priceList } = detail;
-  const price = priceList.find(price=>price.from===getSearchToLs()?.from && price.to===getSearchToLs()?.to)
+  const price = priceList.find(
+    (price) =>
+      price.from === getSearchToLs()?.from && price.to === getSearchToLs()?.to
+  );
+
   return (
-    <div className="mx-16 my-6 bg-white shadow-sm rounded-xl p-6 flex justify-between items-center border border-gray-200 hover:shadow-lg transition-all duration-300">
+    <div className="relative mx-16 my-8 bg-gradient-to-br from-white via-blue-50 to-indigo-50 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 flex justify-between items-center border border-indigo-100">
+      {/* Decorative Left Border */}
+      <div className="absolute left-0 top-0 h-full w-2 bg-gradient-to-b from-blue-500 to-indigo-500 rounded-l-2xl"></div>
+
       {/* Flight Info */}
-      <div>
-        <h1 className="text-2xl font-bold text-gray-800">
-          ✈ Flight Name: {flightName}
+      <div className="ml-6">
+        <h1 className="text-2xl font-bold text-gray-800 tracking-wide">
+          ✈ {flightName}
         </h1>
-        <h2 className="text-base font-semibold text-gray-600 mt-1">
-          📅 Date: {flightDate}
+        <h2 className="text-sm font-medium text-gray-600 mt-2 flex items-center gap-2">
+          📅 <span>{flightDate}</span>
         </h2>
-        <h2 className="text-base font-semibold text-gray-600 mt-1">
-          🕒 Time: {flightTime}
+        <h2 className="text-sm font-medium text-gray-600 mt-1 flex items-center gap-2">
+          🕒 <span>{flightTime}</span>
         </h2>
       </div>
-      <div>
-        Price: $ {price.price}/-
+
+      {/* Price Section */}
+      <div className="text-center">
+        <div className="bg-white border-2 border-indigo-400 rounded-xl px-6 py-3 shadow-sm hover:shadow-md transition">
+          <p className="text-gray-500 text-sm">Ticket Price</p>
+          <p className="text-3xl font-extrabold text-indigo-600">
+            ${price?.price}
+          </p>
+          <p className="text-gray-400 text-xs">per person</p>
+        </div>
       </div>
 
       {/* Button */}
       <Link to={`flightseat/${_id}`}>
-        <button className="px-5 py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 transition">
-          Flight Details
+        <button className="ml-6 px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+          View Details
         </button>
       </Link>
     </div>

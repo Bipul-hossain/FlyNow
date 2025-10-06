@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 const AddFlightAdmin = () => {
   const [roads, setRoads] = useState([]);
   const [destination, setDestination] = useState([]);
   const [price, setPrice] = useState([]);
   const [seats, setSeats] = useState([]);
+  const [errorMessage, setErrorMassage] = useState("");
+
+  const navigate = useNavigate();
 
   let newSeatsArray = [];
   const handleSeats = (e) => {
@@ -44,9 +48,11 @@ const AddFlightAdmin = () => {
       .post("http://localhost:3000/api/aroplane", flight)
       .then(function (response) {
         console.log(response);
+        navigate("/admin/all/flight/list");
       })
       .catch(function (error) {
         console.log(error);
+        setErrorMassage("Something goes Wrong!!");
       });
   };
 
@@ -72,39 +78,52 @@ const AddFlightAdmin = () => {
   //   console.log(price);
 
   return (
-    <div className="mt-3">
-      <div className="text-center text-2xl font-bold text-blue-600">
-        Add New Flight
-      </div>
-      <div
-        className="max-w-md mx-auto bg-white shadow-lg rounded-xl p-6 flex flex-col gap-4 border border-gray-200"
-        action="">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">
-          ✈️ Add New Flight
-        </h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex justify-center items-center p-6">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl p-8 border border-blue-100">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <h2 className="text-3xl font-bold text-blue-700 mb-1">
+            ✈️ Add New Flight
+          </h2>
+          <p className="text-gray-500 text-sm">
+            Fill in the details below to create a new flight schedule.
+          </p>
+        </div>
 
-        <form className="flex justify-center" onSubmit={handleAddRoad}>
-          <input
-            type="text"
-            name="road"
-            placeholder="Enter flight road"
-            required
-            className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          />
-          <button className="btn btn-circle">Add</button>
-        </form>
-        <h1>
-          Flight Road:
-          <ol className="list-decimal ms-5">
-            {roads.map((road) => (
-              <li>{road}</li>
-            ))}
-          </ol>
-        </h1>
-        <form onSubmit={handleSubmitForm}>
+        {/* Road Add Section */}
+        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+          <h3 className="text-lg font-semibold text-blue-800 mb-3">
+            Flight Routes
+          </h3>
+          <form className="flex gap-3" onSubmit={handleAddRoad}>
+            <input
+              type="text"
+              name="road"
+              placeholder="Enter flight route (e.g., Dhaka → Delhi)"
+              required
+              className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+              Add
+            </button>
+          </form>
+
+          {roads.length > 0 && (
+            <ol className="list-decimal ml-6 mt-3 text-gray-700 space-y-1">
+              {roads.map((road, i) => (
+                <li key={i}>{road}</li>
+              ))}
+            </ol>
+          )}
+        </div>
+
+        {/* Main Form */}
+        <form onSubmit={handleSubmitForm} className="space-y-5">
           {/* Flight Name */}
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Flight Name
             </label>
             <input
@@ -112,78 +131,89 @@ const AddFlightAdmin = () => {
               placeholder="Enter flight name"
               name="flightName"
               required
-              className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
           {/* Flight Date */}
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Flight Date
             </label>
             <input
               type="date"
               name="flightDate"
               required
-              className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
           {/* Flight Time */}
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Flight Time
             </label>
             <input
               type="text"
               name="flightTime"
-              placeholder="Enter flight time"
+              placeholder="Enter flight time (e.g., 10:30 AM)"
               required
-              className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-gray-700 mb-1">
+
+          {/* Total Seats */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
               Total Seats
             </label>
             <input
               onChange={handleSeats}
               type="number"
-              placeholder="Enter total Flight Seat"
+              placeholder="Enter total flight seats"
               required
-              className="px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
 
-          {/* Submit Button */}
-          <h1>Price list add</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {price.map((tk, index) => (
-              <div
-                key={index}
-                className="flex flex-col p-4 border rounded-lg shadow-sm bg-white">
-                <label className="text-sm font-medium text-gray-700 mb-1">
-                  {tk.from} ➝ {tk.to}
-                </label>
-                <input
-                  onChange={(e) => (tk.price = e.target.value)}
-                  type="number"
-                  placeholder="Enter price"
-                  className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            ))}
+          {/* Price Section */}
+          <div>
+            <h3 className="text-lg font-semibold text-blue-700 mb-3 border-b border-blue-200 pb-1">
+              💰 Price List
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {price.map((tk, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col p-4 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition bg-gray-50">
+                  <label className="text-sm font-medium text-gray-700 mb-1">
+                    {tk.from} ➝ {tk.to}
+                  </label>
+                  <input
+                    onChange={(e) => (tk.price = e.target.value)}
+                    type="number"
+                    placeholder="Enter price"
+                    className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
+          {/* Error Message */}
+          {errorMessage && (
+            <p className="text-red-600 font-semibold text-center">
+              {errorMessage}
+            </p>
+          )}
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition">
-            Post Flight
+            className="w-full mt-4 bg-blue-600 text-white font-semibold py-2.5 rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 transition-all duration-200">
+            🚀 Post Flight
           </button>
         </form>
-        <div>
-          <h5>{JSON.stringify(price)}</h5>
-        </div>
       </div>
     </div>
   );
