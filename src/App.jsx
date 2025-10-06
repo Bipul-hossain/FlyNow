@@ -18,7 +18,7 @@ function App() {
   const [notFund, setNotFound] = useState(false);
 
   const handleSelector = (e) => {
-    const toDestinationSelector = aroplaneData[0].allDestination.filter(
+    const toDestinationSelector = aroplaneData[0]?.allDestination?.filter(
       (destination) => destination !== e.target.value
     );
     setToDestinations(toDestinationSelector);
@@ -45,8 +45,8 @@ function App() {
   useEffect(() => {
     fetch(
       `http://localhost:3000/api/aroplane/select?flightDate=${
-        getSearchToLs().flightDate
-      }&from=${getSearchToLs().from}&to=${getSearchToLs().to}`
+        getSearchToLs()?.flightDate
+      }&from=${getSearchToLs()?.from}&to=${getSearchToLs()?.to}`
     )
       .then((res) => res.json())
       .then((date) => setSearchResult(date));
@@ -62,15 +62,17 @@ function App() {
       <div className="p-10">
         <form
           className="flex justify-center items-center gap-3"
-          onSubmit={handleSearch}>
+          onSubmit={handleSearch}
+        >
           <label htmlFor="">From</label>
           <select
             onChange={handleSelector}
             name="from"
             defaultValue="Pick a color"
-            className="select">
+            className="select"
+          >
             <option disabled={true}>Pick a color</option>
-            {aroplaneData[0].allDestination.map((road, index) => (
+            {aroplaneData[0]?.allDestination?.map((road, index) => (
               <option key={index}>{road}</option>
             ))}
           </select>

@@ -1,4 +1,10 @@
 const setSearchToLS = (data) => {
+  if (localStorage.getItem("search")) {
+    localStorage.setItem(
+      "search",
+      JSON.stringify({ from: "", to: "", flightDate: "" })
+    );
+  }
   localStorage.setItem("search", JSON.stringify(data));
 };
 
