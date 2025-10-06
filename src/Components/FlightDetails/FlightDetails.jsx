@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router";
+import { getSearchToLs } from "../../utilities/localStorage";
 
 const FlightDetails = ({ detail }) => {
-  const { flightName, flightDate, flightTime, _id } = detail;
+  const { flightName, flightDate, flightTime, _id, priceList } = detail;
+  const price = priceList.find(price=>price.from===getSearchToLs()?.from && price.to===getSearchToLs()?.to)
   return (
     <div className="mx-16 my-6 bg-white shadow-sm rounded-xl p-6 flex justify-between items-center border border-gray-200 hover:shadow-lg transition-all duration-300">
       {/* Flight Info */}
@@ -16,6 +18,9 @@ const FlightDetails = ({ detail }) => {
         <h2 className="text-base font-semibold text-gray-600 mt-1">
           🕒 Time: {flightTime}
         </h2>
+      </div>
+      <div>
+        Price: $ {price.price}/-
       </div>
 
       {/* Button */}
