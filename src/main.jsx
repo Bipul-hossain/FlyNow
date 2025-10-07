@@ -9,6 +9,7 @@ import FlightSeat from "./Components/FlightSeat/FlightSeat.jsx";
 import { getSearchToLs } from "./utilities/localStorage.js";
 import FlightListAdmin from "./Components/AdminSide/FlightList/FlightListAdmin.jsx";
 import AddFlightAdmin from "./Components/AdminSide/AddFlight/AddFlightAdmin.jsx";
+import LoginDeshboard from "./Components/LoginRegistration/LoginDeshboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/all/flight/post",
         Component: AddFlightAdmin,
+      },
+      {
+        path: "/login",
+        Component: LoginDeshboard,
       },
     ],
   },

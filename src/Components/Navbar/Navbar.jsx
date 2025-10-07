@@ -9,7 +9,8 @@ const Navbar = () => {
         <div className="flex-1">
           <Link
             to="/"
-            className="flex items-center gap-2 text-2xl font-bold text-blue-700 hover:text-blue-800 transition">
+            className="flex items-center gap-2 text-2xl font-bold text-blue-700 hover:text-blue-800 transition"
+          >
             Fly Now
           </Link>
         </div>
@@ -24,7 +25,8 @@ const Navbar = () => {
                   ? "text-blue-600 border-b-2 border-blue-600 pb-1"
                   : "text-gray-700 hover:text-blue-600"
               }`
-            }>
+            }
+          >
             Home
           </NavLink>
           <NavLink
@@ -35,7 +37,8 @@ const Navbar = () => {
                   ? "text-blue-600 border-b-2 border-blue-600 pb-1"
                   : "text-gray-700 hover:text-blue-600"
               }`
-            }>
+            }
+          >
             All Flights
           </NavLink>
           <NavLink
@@ -46,8 +49,21 @@ const Navbar = () => {
                   ? "text-blue-600 border-b-2 border-blue-600 pb-1"
                   : "text-gray-700 hover:text-blue-600"
               }`
-            }>
+            }
+          >
             Add Flight
+          </NavLink>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              `font-medium transition ${
+                isActive
+                  ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                  : "text-gray-700 hover:text-blue-600"
+              }`
+            }
+          >
+            Login
           </NavLink>
         </div>
 
@@ -58,7 +74,8 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle hover:bg-blue-100 transition">
+              className="btn btn-ghost btn-circle hover:bg-blue-100 transition"
+            >
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +83,8 @@ const Navbar = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  strokeWidth="2">
+                  strokeWidth="2"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -80,7 +98,8 @@ const Navbar = () => {
             </div>
             <div
               tabIndex={0}
-              className="card dropdown-content bg-white/90 backdrop-blur-md mt-3 w-60 shadow-xl border border-blue-100 rounded-xl z-50">
+              className="card dropdown-content bg-white/90 backdrop-blur-md mt-3 w-60 shadow-xl border border-blue-100 rounded-xl z-50"
+            >
               <div className="card-body">
                 <span className="text-lg font-semibold text-gray-800">
                   8 Items
@@ -102,7 +121,8 @@ const Navbar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar hover:bg-blue-100 transition">
+              className="btn btn-ghost btn-circle avatar hover:bg-blue-100 transition"
+            >
               <div className="w-10 rounded-full ring-2 ring-blue-200">
                 <img
                   alt="Profile"
@@ -112,7 +132,8 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-white/95 backdrop-blur-lg rounded-xl mt-3 w-52 p-2 shadow-lg border border-blue-100 z-50">
+              className="menu menu-sm dropdown-content bg-white/95 backdrop-blur-lg rounded-xl mt-3 w-52 p-2 shadow-lg border border-blue-100 z-50"
+            >
               <li>
                 <a className="justify-between text-gray-700 hover:text-blue-600">
                   Profile
