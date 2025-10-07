@@ -1,7 +1,26 @@
+import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { setTokenLS } from "../../utilities/tokenStore";
 
 const LoginPage = () => {
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const tryLoginUser = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    console.log(tryLoginUser);
+    axios
+      .post("http://localhost:3000/api/login", tryLoginUser)
+      .then(function (response) {
+        console.log(response);
+        setTokenLS(response.headers["x-auth-token"]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
   return (
     <div className="w-full">
       <div className="flex flex-col gap-6">
@@ -15,12 +34,16 @@ const LoginPage = () => {
         </p>
 
         {/* Login Form */}
-        <form className="flex flex-col gap-5 bg-white/20 backdrop-blur-lg p-6 rounded-2xl shadow-md border border-white/30">
+        <form
+          onSubmit={handleLogin}
+          className="flex flex-col gap-5 bg-white/20 backdrop-blur-lg p-6 rounded-2xl shadow-md border border-white/30"
+        >
           {/* Username Field */}
           <div className="flex items-center bg-white/90 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500 transition">
             <MdOutlineAlternateEmail className="text-gray-500 mr-2" />
             <input
               type="email"
+              name="email"
               placeholder="Enter your Email"
               className="bg-transparent outline-none w-full text-gray-700 placeholder-gray-500"
               required
@@ -33,6 +56,7 @@ const LoginPage = () => {
             <input
               type="password"
               placeholder="Enter your password"
+              name="password"
               className="bg-transparent outline-none w-full text-gray-700 placeholder-gray-500"
               required
             />
