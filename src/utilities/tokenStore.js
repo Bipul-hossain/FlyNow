@@ -9,5 +9,7 @@ const getTokenLs = () => {
 const setTokenLS = (token) => {
   localStorage.setItem("token", JSON.stringify(token));
 };
-
-export { getTokenLs, setTokenLS };
+const removeTokenLS = () => {
+  localStorage.removeItem("token");
+};
+export { getTokenLs, setTokenLS, removeTokenLS };

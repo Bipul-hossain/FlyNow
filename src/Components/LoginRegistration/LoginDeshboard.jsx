@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import LoginPage from "./LoginPage";
 import RegistrationPage from "./RegistrationPage";
+import { userContext } from "../../context/Context";
 
 const LoginDeshboard = () => {
   const [isLoginPage, setIsLoginPage] = useState(true);
+  const { user, setUser } = useContext(userContext);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-300 via-indigo-300 to-purple-400 p-6">
@@ -13,6 +15,7 @@ const LoginDeshboard = () => {
         <span className="text-yellow-300">FlyNow</span> — Up to{" "}
         <span className="text-yellow-400">45% Discount!</span>
       </h1>
+      {user.userName}
 
       {/* Card Container */}
       <div className="w-full max-w-md bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/30 p-8 transition-all duration-500">

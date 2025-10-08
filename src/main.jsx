@@ -1,4 +1,4 @@
-import { Children, Component, StrictMode } from "react";
+import { Children, Component, StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -10,6 +10,7 @@ import { getSearchToLs } from "./utilities/localStorage.js";
 import FlightListAdmin from "./Components/AdminSide/FlightList/FlightListAdmin.jsx";
 import AddFlightAdmin from "./Components/AdminSide/AddFlight/AddFlightAdmin.jsx";
 import LoginDeshboard from "./Components/LoginRegistration/LoginDeshboard.jsx";
+import Context from "./context/Context.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <Context>
+      <RouterProvider router={router}></RouterProvider>
+    </Context>
   </StrictMode>
 );

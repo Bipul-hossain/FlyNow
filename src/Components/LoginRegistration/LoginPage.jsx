@@ -2,8 +2,12 @@ import axios from "axios";
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 import { setTokenLS } from "../../utilities/tokenStore";
+import { useContext } from "react";
+import { loadingContext, userContext } from "../../context/Context";
 
 const LoginPage = () => {
+  const { setUser } = useContext(userContext);
+  const { isLoading, setIsLoading } = useContext(loadingContext);
   const handleLogin = (e) => {
     e.preventDefault();
     const tryLoginUser = {
@@ -15,11 +19,13 @@ const LoginPage = () => {
       .post("http://localhost:3000/api/login", tryLoginUser)
       .then(function (response) {
         console.log(response);
+        setUser(response.data);
         setTokenLS(response.headers["x-auth-token"]);
       })
       .catch(function (error) {
         console.log(error);
       });
+    setIsLoading(false);
   };
   return (
     <div className="w-full">
