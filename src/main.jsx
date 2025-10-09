@@ -11,6 +11,7 @@ import FlightListAdmin from "./Components/AdminSide/FlightList/FlightListAdmin.j
 import AddFlightAdmin from "./Components/AdminSide/AddFlight/AddFlightAdmin.jsx";
 import LoginDeshboard from "./Components/LoginRegistration/LoginDeshboard.jsx";
 import Context from "./context/Context.jsx";
+import Protected from "./Components/Protected/Protected.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
       {
         path: "/admin/all/flight/list",
         loader: () => fetch("http://localhost:3000/api/aroplane"),
-        Component: FlightListAdmin,
+        element: (
+          <Protected>
+            <FlightListAdmin></FlightListAdmin>
+          </Protected>
+        ),
       },
       {
         path: "/admin/all/flight/post",
