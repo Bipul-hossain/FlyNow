@@ -4,10 +4,16 @@ import axios from "axios";
 
 export const userContext = createContext();
 export const loadingContext = createContext();
+export const selectedSitContext = createContext();
+export const flightDetailsContext = createContext();
 
 const Context = ({ children }) => {
   const [user, setUser] = useState({});
+  console.log(user);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSit, setSelectedSit] = useState([]);
+  const [detailsFlight, setDetailsFlight] = useState({});
+  const [price, setPrice] = useState({});
   useEffect(() => {
     const token = getTokenLs();
     if (token) {
@@ -29,11 +35,16 @@ const Context = ({ children }) => {
     setIsLoading(false);
   }, []);
   return (
-    <loadingContext.Provider value={{ isLoading, setIsLoading }}>
-      <userContext.Provider value={{ user, setUser }}>
-        {children}
-      </userContext.Provider>
-    </loadingContext.Provider>
+    <flightDetailsContext.Provider
+      value={{ detailsFlight, setDetailsFlight, price, setPrice }}>
+      <selectedSitContext.Provider value={{ selectedSit, setSelectedSit }}>
+        <loadingContext.Provider value={{ isLoading, setIsLoading }}>
+          <userContext.Provider value={{ user, setUser }}>
+            {children}
+          </userContext.Provider>
+        </loadingContext.Provider>
+      </selectedSitContext.Provider>
+    </flightDetailsContext.Provider>
   );
 };
 

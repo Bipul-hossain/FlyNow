@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
 import { getSearchToLs } from "../../utilities/localStorage";
+import { flightDetailsContext } from "../../context/Context";
 
 const FlightDetails = ({ detail }) => {
   const { flightName, flightDate, flightTime, _id, priceList } = detail;
+  const { detailsFlight, setDetailsFlight, setPrice } =
+    useContext(flightDetailsContext);
   const price = priceList.find(
     (price) =>
       price.from === getSearchToLs()?.from && price.to === getSearchToLs()?.to
   );
-
+  const handleDetails = () => {
+    setPrice(price);
+    setDetailsFlight(detail);
+  };
   return (
     <div className="relative mx-16 my-8 bg-gradient-to-br from-white via-blue-50 to-indigo-50 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 flex justify-between items-center border border-indigo-100">
       {/* Decorative Left Border */}
@@ -40,7 +46,9 @@ const FlightDetails = ({ detail }) => {
 
       {/* Button */}
       <Link to={`flightseat/${_id}`}>
-        <button className="ml-6 px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
+        <button
+          onClick={() => handleDetails()}
+          className="ml-6 px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition">
           View Details
         </button>
       </Link>

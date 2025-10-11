@@ -12,6 +12,7 @@ import AddFlightAdmin from "./Components/AdminSide/AddFlight/AddFlightAdmin.jsx"
 import LoginDeshboard from "./Components/LoginRegistration/LoginDeshboard.jsx";
 import Context from "./context/Context.jsx";
 import Protected from "./Components/Protected/Protected.jsx";
+import OrderDetails from "./Components/FlightSeat/Sits/OrderDetails/OrderDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
               params.flightId
             }?from=${getSearchToLs().from}&to=${getSearchToLs().to}`
           ),
-        Component: FlightSeat,
+        element: (
+          <Protected>
+            <FlightSeat></FlightSeat>
+          </Protected>
+        ),
       },
       {
         path: "/admin/all/flight/list",
@@ -40,11 +45,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/all/flight/post",
-        Component: AddFlightAdmin,
+        element: (
+          <Protected>
+            <AddFlightAdmin></AddFlightAdmin>
+          </Protected>
+        ),
       },
       {
         path: "/login",
         Component: LoginDeshboard,
+      },
+      {
+        path: "/order/details",
+        Component: OrderDetails,
       },
     ],
   },
