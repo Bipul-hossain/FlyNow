@@ -153,9 +153,11 @@ const Navbar = () => {
                     </a>
                   </li>
                   <li>
-                    <a className="text-gray-700 hover:text-blue-600">
-                      Settings
-                    </a>
+                    <Link
+                      to={"/admin/all/flight/ticket"}
+                      className="text-gray-700 hover:text-blue-600">
+                      Tickets
+                    </Link>
                   </li>
                   <li>
                     <a

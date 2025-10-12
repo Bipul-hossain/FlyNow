@@ -13,6 +13,7 @@ import LoginDeshboard from "./Components/LoginRegistration/LoginDeshboard.jsx";
 import Context from "./context/Context.jsx";
 import Protected from "./Components/Protected/Protected.jsx";
 import OrderDetails from "./Components/FlightSeat/Sits/OrderDetails/OrderDetails.jsx";
+import TicketsDeshboard from "./Components/Tickets/TicketsDeshboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,14 @@ const router = createBrowserRouter([
         element: (
           <Protected>
             <AddFlightAdmin></AddFlightAdmin>
+          </Protected>
+        ),
+      },
+      {
+        path: "/admin/all/flight/ticket",
+        element: (
+          <Protected>
+            <TicketsDeshboard></TicketsDeshboard>
           </Protected>
         ),
       },

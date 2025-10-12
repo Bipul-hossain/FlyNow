@@ -12,12 +12,42 @@ import {
   FaChair,
   FaMoneyBill,
 } from "react-icons/fa";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const OrderDetails = ({ price }) => {
   const { user } = useContext(userContext);
   const { selectedSit, setSelectedSit } = useContext(selectedSitContext);
+  const { detailsFlight } = useContext(flightDetailsContext);
+  const navigate = useNavigate();
   //   const { price } = useContext(flightDetailsContext);
   const destination = getSearchToLs();
+  const handleOrderConfirm = () => {
+    console.log("Clicked.....", price);
+    const order = {
+      email: user.email,
+      flightDetails: {
+        flightName: detailsFlight.flightName,
+        flightDate: detailsFlight.flightDate,
+        flightTime: detailsFlight.flightTime,
+        from: destination.from,
+        to: destination.to,
+        price: price?.price * selectedSit.length,
+        flightSeat: selectedSit,
+      },
+    };
+    console.log("Order...", order);
+    axios
+      .put("http://localhost:3000/api/confirmorder", order)
+      .then((response) => {
+        alert("Order Confiremed Successfull");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="max-w-lg mx-auto bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl shadow-xl p-6 border border-blue-200 mt-10">
       {/* Header */}
@@ -30,7 +60,7 @@ const OrderDetails = ({ price }) => {
         <div className="flex items-center text-gray-700">
           <FaUser className="text-blue-500 mr-2" />
           <span className="font-medium">Name:</span>
-          <span className="ml-2">{user.userName}</span>
+          <span className="ml-2 uppercase">{user.userName}</span>
         </div>
 
         <div className="flex items-center text-gray-700">
@@ -44,6 +74,7 @@ const OrderDetails = ({ price }) => {
       <div className="flex items-center bg-blue-600 text-white p-3 rounded-xl mb-5">
         <FaPlaneDeparture className="mr-3 text-2xl" />
         <div>
+          <p className="font-semibold text-lg">{detailsFlight.flightName}</p>
           <p className="font-semibold text-lg">
             {destination.from} ➤ {destination.to}
           </p>
@@ -88,8 +119,27 @@ const OrderDetails = ({ price }) => {
           ))}
         </div>
       </div>
+      <div className="flex justify-center text-white">
+        <button
+          onClick={() => handleOrderConfirm()}
+          className="m-4 btn btn-dash bg-amber-400 w-full text">
+          Order Confirm
+        </button>
+      </div>
     </div>
   );
 };
 
 export default OrderDetails;
+
+// bookedFlight: [
+//     new mongoose.Schema({
+//       flightName: String,
+//       flightDate: String,
+//       flightTime: String,
+//       from: String,
+//       to: String,
+//       price: { type: Number, default: 0 },
+//       flightSeat: [Object],
+//     }),
+//   ]

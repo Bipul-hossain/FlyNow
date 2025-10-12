@@ -12,8 +12,8 @@ const FlightDetails = ({ detail }) => {
       price.from === getSearchToLs()?.from && price.to === getSearchToLs()?.to
   );
   const handleDetails = () => {
-    setPrice(price);
-    setDetailsFlight(detail);
+    // setPrice(price);
+    // setDetailsFlight(detail);
   };
   return (
     <div className="relative mx-16 my-8 bg-gradient-to-br from-white via-blue-50 to-indigo-50 rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 flex justify-between items-center border border-indigo-100">

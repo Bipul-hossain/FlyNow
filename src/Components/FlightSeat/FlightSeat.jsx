@@ -1,7 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import Sits from "./Sits/Sits";
-import { selectedSitContext } from "../../context/Context";
+import {
+  flightDetailsContext,
+  selectedSitContext,
+} from "../../context/Context";
 import OrderDetails from "./Sits/OrderDetails/OrderDetails";
 import { getSearchToLs } from "../../utilities/localStorage";
 
@@ -15,12 +18,16 @@ const FlightSeat = () => {
   );
 
   const { selectedSit, setSelectedSit } = useContext(selectedSitContext);
+  const { setDetailsFlight } = useContext(flightDetailsContext);
   const [isDetails, setIsDetails] = useState(false);
 
   const handleIsDetails = () => {
     console.log("Clicked");
     setIsDetails(!isDetails);
   };
+  useEffect(() => {
+    setDetailsFlight(flight);
+  }, []);
 
   return (
     <div>
